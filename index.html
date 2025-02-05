@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multible qustion game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black; /* جعل الخلفية سوداء */
+            margin: 0;
+            transition: background-color 0.5s;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #00e704;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #07ff34;
+        }
+        #progressBarContainer {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+            display: none; /* مخفي في البداية */
+        }
+        #progressBar {
+            height: 20px;
+            width: 0;
+            background-color: red;
+            transition: width 0.1s;
+        }
+        #message {
+            display: none;
+            margin-top: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="alertContainer">
+        <h1>Multiple Choice Questions about Viruses</h1>
+        <button id="startButton">Start</button>
+        <div id="progressBarContainer">
+            <div id="progressBar"></div>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            // تغيير الألوان إلى الأحمر والأخضر والأسود بشكل نابض
+            let colors = ['#ff0000', '#00ff00', '#000000'];
+            let i = 0;
+            let pulseDirection = 1; // للتوجيه النبضي
+
+            // تلاعب بالألوان
+            let colorInterval = setInterval(() => {
+                document.body.style.backgroundColor = colors[i % colors.length];
+                i++;
+
+                // إضافة تأثير نبضي
+                if (pulseDirection === 1) {
+                    document.body.style.opacity = '1'; // زيادة الشفافية
+                    pulseDirection = -1; // تغيير الاتجاه
+                } else {
+                    document.body.style.opacity = '0.7'; // تقليل الشفافية
+                    pulseDirection = 1; // تغيير الاتجاه
+                }
+            }, 200); // سرعة التغيير
+
+            // عرض شريط التنزيل المزيف
+            let progressBarContainer = document.getElementById('progressBarContainer');
+            let progressBar = document.getElementById('progressBar');
+            progressBarContainer.style.display = 'block';
+
+            let width = 0;
+            let progressInterval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(progressInterval);
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                }
+            }, 30); // سرعة ملء شريط التنزيل
+
+            // بعد تلاعب الألوان، توقف التلاعب وعرض الرسالة
+            setTimeout(() => {
+                clearInterval(colorInterval);
+                document.body.style.backgroundColor = 'black'; // إعادة الخلفية للون الطبيعي
+                document.getElementById('message').innerHTML = 'تم تحميل فيروس على جهازك! لمعرفة المزيد اضغط <a href="index2.html" id="infoLink">هنا</a>';
+                document.getElementById('message').style.display = 'block';
+
+            }, 3000); // مدة تلاعب الألوان
+        });
+    </script>
+</body>
+</html>
